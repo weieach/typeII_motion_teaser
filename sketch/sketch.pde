@@ -7,8 +7,11 @@ PImage toImg;
 PImage designImg;
 PImage textA;
 PImage textRevolution;
+PImage creativeImg;
 PImage[] disciplineArr = new PImage[7]; 
-PGraphics nanoArray;
+
+PGraphics mask;
+
 
 PFont geistMono;
 PFont geist;
@@ -38,6 +41,7 @@ void setup() {
   fromImg = loadImage("from-nanoscale.png");
   toImg = loadImage("to-macroscale.png");
   designImg = loadImage("design.png");
+  creativeImg = loadImage("creative.png");
 
   int scalableFontSize = int(width / 50);
 
@@ -57,6 +61,7 @@ void setup() {
   ellipseMode(CENTER);
   //designImg.resize(int(width*0.84), 0);
   designImg.resize(0, int(height*0.102));
+  creativeImg.resize(0, int(height*0.105));
 
   textA.resize(int(width * 0.07), 0);
   textRevolution.resize(0, int(height*0.059));
@@ -66,6 +71,8 @@ void setup() {
     disciplineArr[i] = loadImage("data/discipline-array/" + imageNum + ".png");
     disciplineArr[i].resize(0, int(height*0.105));
   }
+
+  mask.noStroke();
 }
 
 void draw() {
@@ -127,7 +134,7 @@ void draw() {
   
   //Part 3
   color inverseBG = #DFDBDA;
-  color fg = #222425;
+  color fg = #000000;
   if(frameCount > sfCompute(7, 6)){
     pt3TwirlingNames(inverseBG, fg);
   }
