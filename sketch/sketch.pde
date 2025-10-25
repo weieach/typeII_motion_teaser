@@ -8,10 +8,18 @@ PImage designImg;
 PImage textA;
 PImage textRevolution;
 PImage creativeImg;
-PImage[] disciplineArr = new PImage[7]; 
+PImage title400;
 
+String[] artists;
+
+// PImage maskImg;
+PImage[] disciplineArr = new PImage[7];
+
+// PGraphics masked;
 PGraphics mask;
-
+PGraphics noMask;
+int maskW;
+int maskH;
 
 PFont geistMono;
 PFont geist;
@@ -31,32 +39,48 @@ int disciplineImgNum = 0;
 int factorX = 1;
 int factorY = 1;
 
-color bgcolor = #222425;
+color bgcolor = #000000;
+// color bgcolor = #222425;
 color fYellow = #CFE830;
-
+color inverseBG = #DFDBDA;
 
 
 void setup() {
   size(540, 960, P2D);
+  pixelDensity(2);
+
+  maskW = int(width * 0.17 + 1);
+  maskH = int(height * 0.0925);
+
   fromImg = loadImage("from-nanoscale.png");
   toImg = loadImage("to-macroscale.png");
   designImg = loadImage("design.png");
   creativeImg = loadImage("creative.png");
+  // maskImg = loadImage("mask.png");
+  title400 = loadImage("400+.png");
+
+  mask = createGraphics(width, height);
+  noMask = createGraphics(width, height);
+  // mask = createGraphics(int(width * 0.17), int(height * 0.0925));
+  // mask.noStroke();
+
+  // maskImg.resize(width,0);
 
   int scalableFontSize = int(width / 50);
 
   textA = loadImage("a.png");
   textRevolution = loadImage("Revolution.png");
 
-  geistMono = createFont("GeistMono-VariableFont_wght.ttf", 44);
+  geistMono = createFont("GeistMono-VariableFont_wght.ttf", scalableFontSize * 4.07);
   geist = createFont("Geist-VariableFont_wght.ttf", scalableFontSize);
   textFont(geistMono);
 
   bgm = new SoundFile(this, "data/ThePointsThatMatter.mp3");
   bgm.play();
-  pixelDensity(2);
+
   frameRate(frameRate);
   toImg.resize(width, 0);
+  title400.resize(int(width*0.5), 0);
 
   ellipseMode(CENTER);
   //designImg.resize(int(width*0.84), 0);
@@ -66,13 +90,13 @@ void setup() {
   textA.resize(int(width * 0.07), 0);
   textRevolution.resize(0, int(height*0.059));
 
-  for(int i = 0; i < 7; i++){
+  for (int i = 0; i < 7; i++) {
     int imageNum = i + 1;
     disciplineArr[i] = loadImage("data/discipline-array/" + imageNum + ".png");
     disciplineArr[i].resize(0, int(height*0.105));
   }
 
-  mask.noStroke();
+  artists = loadStrings("artist_names.txt");
 }
 
 void draw() {
@@ -87,7 +111,7 @@ void draw() {
   int tileW = width / factorX;
   int tileH = height / factorY;
 
-  if(frameCount < sfCompute(1, 5)){
+  if (frameCount < sfCompute(1, 5)) {
     for (int y = 0; y < factorY; y++) {
       for (int x = 0; x < factorX; x++) {
         fromImg.resize(tileW, 0);
@@ -125,20 +149,33 @@ void draw() {
 
   //Part 2: Design array
   //Original end: sfCompute(5, 22) -> + 32f
-  if (frameCount > sfCompute(3, 14) && frameCount <= sfCompute(7, 6)) {
+  if (frameCount > sfCompute(3, 14) && frameCount <= sfCompute(7, 8)) {
     imageMode(CENTER);
     rectMode(CENTER);
     pt2DesignArray();
   }
 
-  
-  //Part 3
-  color inverseBG = #DFDBDA;
-  color fg = #000000;
-  if(frameCount > sfCompute(7, 6)){
-    pt3TwirlingNames(inverseBG, fg);
+
+  //Part 3: twirling names
+
+
+  if (frameCount > sfCompute(7, 8) && frameCount <= sfCompute(11, 7)) {
+    pt3TwirlingNames();
   }
+
+  //Part 4: 400 names
+  
+
+
+  // if (frameCount > sfCompute(8, 17) && frameCount <= sfCompute(10, 3)) {
+  //   pt4ArtistNames();
+  // }
 
   //Annotation
   text(s + "s" + f + "f", 0, height-100);
 }
+
+void keyPressed() {
+  saveFrame();
+}
+
