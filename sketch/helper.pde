@@ -28,10 +28,30 @@ PGraphics drawMasked(int secondsBackward, int artistIndex, boolean varyingLength
       // textSize(40);
       // text(i* step * frameCount * 0.1, 0, 0);
       masked.pushMatrix();
+      masked.fill(0);
       
       masked.rotate(radians(i* step * (frameCount - secondsBackward) * 0.1 + 2));
 
       masked.translate(i*3, 0);
+      masked.textFont(geistSmall);
+
+      if(varyingLength){
+        if(random(1) > 0.5){
+        masked.rect(0, 0, textWidth(artists[artistIndex]), 35);
+        masked.fill(#DFDBDA);
+      } else {
+        masked.imageMode(CORNER);
+        if(random(1) > 0.5){
+        int i2 = int(random(exhibitArr.length));
+        exhibitArr[i2].resize(int(textWidth("designer")), 35);
+        masked.image(exhibitArr[i2], 0, 0);
+        } else {
+          masked.rect(0, 0, textWidth("designer"), 35);
+        }
+      }
+      } else {
+        masked.rect(0, 0, 35, 35);
+      }
     
       masked.text(artists[artistIndex], 35, 35);
       if(artistIndex == 300){
@@ -43,15 +63,7 @@ PGraphics drawMasked(int secondsBackward, int artistIndex, boolean varyingLength
         artistIndex = 0;
       }
 
-      if(varyingLength){
-        if(random(1) > 0.5){
-        masked.rect(0, 0, textWidth(artists[artistIndex]), 35);
-      } else {
-         masked.rect(0, 0, textWidth("designer"), 35);
-      }
-      } else {
-        masked.rect(0, 0, 35, 35);
-      }
+      
       
       
       

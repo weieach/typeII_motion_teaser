@@ -1,4 +1,5 @@
 void pt2DesignArray() {
+  background(bgcolor);
   pushMatrix();
   translate(width/2, height*0.073);
 

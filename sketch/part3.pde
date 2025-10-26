@@ -18,7 +18,7 @@ void pt3TwirlingNames() {
     varyingLength = true;
   }
   
-  if (frameCount >= sfCompute(9, 16) && frameCount < sfCompute(11, 2)) {
+  if (frameCount >= sfCompute(9, 16) && frameCount < sfCompute(10, 14)) {
     varyingLength = false;
   }
 
@@ -34,7 +34,7 @@ void pt3TwirlingNames() {
 
   image(maskedImg, width/2, height/2);
 
-  if (frameCount >= sfCompute(9, 5) && frameCount < sfCompute(11, 2)) {
+  if (frameCount >= sfCompute(9, 5) && frameCount < sfCompute(10, 15)) {
     image(title400, width/2, height/2);
   }
 
